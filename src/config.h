@@ -1,0 +1,1 @@
+#define DTB_START 0x8000000
