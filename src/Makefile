@@ -1,9 +1,11 @@
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
-ELF_BIN = $(wildcard *.elf.bin)
-ELO = $(ELF_BIN:.elf.bin=.elo)
-DTB = $(wildcard *.dtb)
-DTO = $(DTB:.dtb=.dto)
+
+# Input and output
+ELF_BIN = kernel.elf.bin
+ELO = kernel.elo
+DTB = devicetree.dtb
+DTO = devicetree.dto
 CFLAGS = -Wall -O2 -ffreestanding -nostdlib -nostartfiles -g
 
 all: clean kernel8.img
@@ -21,11 +23,11 @@ kernel8.img: start.o $(OBJS) $(DTO) $(ELO)
 #	mv kernel8.elf kernel8.img
 
 # DTB Objects
-%.dto: %.dtb
+$(DTO): $(DTB)
 	aarch64-linux-gnu-objcopy -I binary -O elf64-littleaarch64 -B aarch64 $< $@
 
 # Target Multiboot ELF binary to be added
-%.elo: %.elf.bin
+$(ELO): $(ELF_BIN)
 	aarch64-linux-gnu-objcopy -I binary -O elf64-littleaarch64 -B aarch64 $< $@
 
 clean:
