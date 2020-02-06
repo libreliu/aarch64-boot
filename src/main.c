@@ -8,9 +8,9 @@ extern char _binary_devicetree_dtb_start;
 extern char _binary_devicetree_dtb_end;
 extern char *_binary_devicetree_dtb_size;
 
-extern char _binary_kernel_elf_start;
-extern char _binary_kernel_elf_end;
-extern char _binary_kernel_elf_size;
+extern char _binary_kernel_elf_bin_start;
+extern char _binary_kernel_elf_bin_end;
+extern char _binary_kernel_elf_bin_size;
 
 extern char __bss_start;
 extern char __bss_end;
@@ -43,12 +43,12 @@ int main(void) {
             &_binary_devicetree_dtb_end,
             &_binary_devicetree_dtb_size);
     printf("Binary Start=%x, End=%x, Size=%x\n", 
-            &_binary_kernel_elf_start,
-            &_binary_kernel_elf_end,
-            &_binary_kernel_elf_size);
-    if (!multiboot_search(&_binary_kernel_elf_start)) {
+            &_binary_kernel_elf_bin_start,
+            &_binary_kernel_elf_bin_end,
+            &_binary_kernel_elf_bin_size);
+    if (!multiboot_search(&_binary_kernel_elf_bin_start)) {
         move(DTB_START, &_binary_devicetree_dtb_start, &_binary_devicetree_dtb_size);
-        multiboot_boot(&_binary_kernel_elf_start);
+        multiboot_boot(&_binary_kernel_elf_bin_start);
     }
 
 }

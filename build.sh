@@ -6,11 +6,14 @@ SCRIPT_DIR=$(dirname "${SCRIPT_PATH}")
 
 echo "aarch64-boot builder for RPi 3b+"
 
-if [ $# -ne 3 ]; then
+if [ $# -ne 2 ]; then
     echo "Usage: $0 kernel_file_path dtb_file_path"
     echo "When success, kernel8.img will be copied here."
     exit 1
 fi
+
+rm "${SCRIPT_DIR}/src/kernel.elf.bin" || true
+rm "${SCRIPT_DIR}/src/devicetree.dtb" || true
 
 cp $1 "${SCRIPT_DIR}/src/kernel.elf.bin"
 cp $2 "${SCRIPT_DIR}/src/devicetree.dtb"
